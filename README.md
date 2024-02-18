@@ -1,5 +1,8 @@
 # Vimmerse
 
+# Deployment
+This site is delployed at https://vimmerse.vercel.app/
+
 # Pre-requisites
 
 - Install [Node.js](https://nodejs.org/en/) latest version
