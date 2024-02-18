@@ -60,8 +60,13 @@ export const usePainter = () => {
       if (!isDrawing.current || !ctx.current) return;
 
       if (isRegularPaintMode.current || isEraserMode.current) {
-        ctx.current.strokeStyle = selectedColor.current;
-        ctx.current.fillStyle = selectedCanvasColor.current;
+        if (isEraserMode.current) {
+          ctx.current.strokeStyle = selectedCanvasColor.current;
+          ctx.current.globalCompositeOperation = "source-over";
+        } else {
+          ctx.current.strokeStyle = selectedColor.current;
+          ctx.current.globalCompositeOperation = "source-over";
+        }
 
         setCurrentColor(selectedColor.current);
         setCanvasColor(selectedCanvasColor.current);
@@ -69,10 +74,6 @@ export const usePainter = () => {
         autoWidth.current && !isEraserMode.current
           ? dynamicLineWidth()
           : (ctx.current.lineWidth = selectedLineWidth.current);
-
-        isEraserMode.current
-          ? (ctx.current.globalCompositeOperation = "destination-out")
-          : (ctx.current.globalCompositeOperation = "source-over");
       } else {
         setCurrentColor(
           `hsl(${hue.current},${selectedSaturation.current}%,${selectedLightness.current}%)`
